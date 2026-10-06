@@ -1,0 +1,14 @@
+/// <reference types="vite/client" />
+
+interface ImportMetaEnv {
+  readonly VITE_RPC_URL?: string
+  readonly VITE_MERCHANT_ADDRESS?: string
+  readonly VITE_LLM_PROVIDER?: string
+  readonly VITE_LLM_API_KEY?: string
+  readonly VITE_LLM_BASE_URL?: string
+  readonly VITE_LLM_MODEL?: string
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}

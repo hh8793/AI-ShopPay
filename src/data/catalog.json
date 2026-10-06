@@ -1,0 +1,74 @@
+[
+  {
+    "id": "creator-membership-card",
+    "name": "创作社群数字会员卡",
+    "category": "membership",
+    "categoryLabel": "会员权益",
+    "icon": "🎫",
+    "priceSol": 0.5,
+    "priceLamports": 500000000,
+    "description": "加入独立创作者会员社群：解锁每月 2 场直播、全部付费专栏与专属身份组，会员权益以链上凭证永久存证。",
+    "highlight": "演示主推 · 数字权益上链",
+    "tags": ["会员", "会员卡", "社群", "社区", "入会", "vip", "订阅", "创作者", "nft会员", "身份", "直播", "专栏"]
+  },
+  {
+    "id": "coffee-voucher",
+    "name": "线下咖啡兑换券",
+    "category": "physical",
+    "categoryLabel": "线下权益",
+    "icon": "☕",
+    "priceSol": 0.25,
+    "priceLamports": 250000000,
+    "description": "合作咖啡馆任选一杯中杯拿铁或美式，链上凭证到店核销，打通 Solana Pay 线下真实消费场景。",
+    "highlight": "真实世界落地 · 线下核销",
+    "tags": ["咖啡", "拿铁", "美式", "奶茶", "饮品", "兑换券", "券", "线下", "门店", "到店", "喝"]
+  },
+  {
+    "id": "saas-monthly-sub",
+    "name": "独立开发者 SaaS 月订阅",
+    "category": "digital",
+    "categoryLabel": "数字商品",
+    "icon": "🧰",
+    "priceSol": 1.2,
+    "priceLamports": 1200000000,
+    "description": "独立开发效率套件 Pro 月卡，解锁全部高级功能，用 SOL 直接订阅 SaaS 服务，订阅凭证链上可查。",
+    "highlight": "Web3 订阅经济",
+    "tags": ["saas", "软件", "开发者", "工具", "效率", "月卡", "pro", "订阅", "app", "服务"]
+  },
+  {
+    "id": "web3-pay-ebook",
+    "name": "《链上消费指南》电子书",
+    "category": "digital",
+    "categoryLabel": "数字商品",
+    "icon": "📖",
+    "priceSol": 0.15,
+    "priceLamports": 150000000,
+    "description": "Web3 支付入门电子书：快速理解钱包、交易、Solana Pay 与链上凭证，30 分钟从小白到上手。",
+    "highlight": "知识付费上链",
+    "tags": ["书", "电子书", "教程", "指南", "入门", "学习", "知识", "阅读", "web3", "区块链"]
+  },
+  {
+    "id": "aurora-dreams-nft",
+    "name": "数字艺术藏品「极光梦境」",
+    "category": "digital",
+    "categoryLabel": "数字商品",
+    "icon": "🌌",
+    "priceSol": 0.88,
+    "priceLamports": 880000000,
+    "description": "AI 生成限量数字艺术品，购买即完成链上确权，附带不可篡改的收藏凭证与溯源链接。",
+    "highlight": "限量 100 份 · 链上确权",
+    "tags": ["艺术", "nft", "藏品", "收藏", "数字艺术", "限量", "画", "作品", "极光", "ai生成"]
+  },
+  {
+    "id": "buy-creator-coffee",
+    "name": "请创作者喝一杯咖啡",
+    "category": "digital",
+    "categoryLabel": "数字商品",
+    "icon": "💛",
+    "priceSol": 0.1,
+    "priceLamports": 100000000,
+    "description": "小额打赏支持独立创作者，感谢与鼓励比价格更珍贵，每一笔支持都会链上留痕。",
+    "highlight": "创作者经济 · 微支付",
+    "tags": ["打赏", "支持", "捐赠", "感谢", "小费", "随喜", "鼓励", "创作者", "咖啡"]
+  }
+]
