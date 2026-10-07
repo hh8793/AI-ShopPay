@@ -15,6 +15,20 @@ export interface Product {
   tags: string[]
 }
 
+/** 店铺商品：商家归属 + 上架/下架状态（与基础商品字段兼容） */
+export interface ShopProduct extends Product {
+  merchantId: string
+  listed: boolean
+}
+
+/** 商家 */
+export interface Merchant {
+  id: string
+  name: string
+  tagline: string
+  icon: string
+}
+
 export type EngineKind = 'llm' | 'local'
 
 export interface ChatMessage {

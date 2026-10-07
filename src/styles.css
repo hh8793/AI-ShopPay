@@ -1149,6 +1149,310 @@ body::before {
   }
 }
 
+/* 空目录提示 */
+.grid-empty {
+  padding: 48px 20px;
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--text-dim);
+  border: 1px dashed var(--panel-border-bright);
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ---------- 商家工作台 ---------- */
+.merchant-entry {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(135deg, rgba(153, 69, 255, 0.16), rgba(20, 241, 149, 0.1));
+  border: 1px solid rgba(153, 69, 255, 0.45);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast), filter var(--dur-fast);
+}
+.merchant-entry:hover {
+  border-color: rgba(20, 241, 149, 0.65);
+  box-shadow: 0 0 24px rgba(153, 69, 255, 0.35);
+  filter: brightness(1.1);
+}
+.merchant-entry:active {
+  transform: scale(0.96);
+}
+
+.merchant-overlay {
+  z-index: 60;
+}
+.merchant-sheet {
+  max-width: 900px;
+  padding: 30px 30px 28px;
+}
+.merchant-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.merchant-title h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+.merchant-title p {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.merchant-body {
+  display: grid;
+  grid-template-columns: 236px 1fr;
+  gap: 18px;
+  min-height: 300px;
+}
+
+/* 商家切换侧栏 */
+.merchant-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.merchant-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--r-md);
+  padding: 12px 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color var(--dur-fast), background var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast);
+}
+.merchant-item:hover {
+  background: rgba(255, 255, 255, 0.075);
+  border-color: var(--panel-border-bright);
+  transform: translateX(2px);
+}
+.merchant-item.active {
+  background: linear-gradient(135deg, rgba(153, 69, 255, 0.2), rgba(20, 241, 149, 0.08));
+  border-color: rgba(153, 69, 255, 0.6);
+  box-shadow: 0 0 22px rgba(153, 69, 255, 0.22);
+}
+.merchant-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  font-size: 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(153, 69, 255, 0.22), rgba(20, 241, 149, 0.14));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.merchant-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.merchant-info strong {
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.merchant-info small {
+  font-size: 11px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.merchant-stat {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 10.5px;
+  color: var(--green);
+  background: rgba(20, 241, 149, 0.09);
+  border: 1px solid rgba(20, 241, 149, 0.3);
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* 商品管理主区 */
+.merchant-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.merchant-main-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.merchant-main-head h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+.merchant-empty {
+  margin: 0;
+  padding: 30px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.merchant-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.merchant-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--r-md);
+  padding: 11px 14px;
+  transition: background var(--dur-fast), border-color var(--dur-fast), opacity var(--dur-fast);
+}
+.merchant-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--panel-border-bright);
+}
+.merchant-row.off {
+  opacity: 0.62;
+}
+.merchant-row-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  font-size: 19px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.merchant-row-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+.merchant-row-info strong {
+  font-size: 13.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.merchant-row-info small {
+  font-size: 11.5px;
+  color: var(--text-dim);
+}
+.status-pill {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.status-pill.on {
+  color: var(--green);
+  background: rgba(20, 241, 149, 0.09);
+  border: 1px solid rgba(20, 241, 149, 0.32);
+}
+.status-pill.off {
+  color: var(--danger);
+  background: rgba(255, 92, 122, 0.08);
+  border: 1px solid rgba(255, 92, 122, 0.32);
+}
+.listing-btn {
+  flex-shrink: 0;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  transition: filter var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast), background var(--dur-fast), border-color var(--dur-fast);
+}
+.listing-btn:active {
+  transform: scale(0.96);
+}
+.listing-btn.on {
+  background: linear-gradient(135deg, #14f195, #0aa86a);
+  border: 1px solid rgba(20, 241, 149, 0.5);
+  color: #05230f;
+  box-shadow: 0 4px 18px rgba(20, 241, 149, 0.28);
+}
+.listing-btn.on:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 26px rgba(20, 241, 149, 0.4);
+}
+.listing-btn.off {
+  background: rgba(255, 92, 122, 0.1);
+  border: 1px solid rgba(255, 92, 122, 0.42);
+  color: #ffb3c1;
+}
+.listing-btn.off:hover {
+  background: rgba(255, 92, 122, 0.18);
+  box-shadow: 0 0 20px rgba(255, 92, 122, 0.24);
+}
+@media (max-width: 980px) {
+  .merchant-sheet {
+    max-width: 680px;
+  }
+  .merchant-body {
+    grid-template-columns: 1fr;
+  }
+  .merchant-side {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .merchant-item {
+    min-width: 210px;
+  }
+}
+@media (max-width: 640px) {
+  .merchant-sheet {
+    padding: 22px 16px 18px;
+  }
+  .merchant-row {
+    flex-wrap: wrap;
+  }
+  .merchant-stat {
+    display: none;
+  }
+}
+
 /* 尊重系统减少动效设置 */
 @media (prefers-reduced-motion: reduce) {
   *,

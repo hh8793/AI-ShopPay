@@ -1,10 +1,8 @@
 // 本地智能匹配引擎：零依赖、零密钥、零网络，为路演提供 100% 稳定的 AI 导购理解能力。
 // 采用中英文关键词 + 标签加权重评分的轻量语义匹配，支持意图识别（问候/推荐/询价/购物）。
+// 商品集由调用方传入（仅上架商品），商城上下架状态实时影响导购结果。
 
 import type { Product } from '../types'
-import catalog from '../data/catalog.json'
-
-const PRODUCTS = catalog as Product[]
 
 export interface LocalIntent {
   kind: 'greeting' | 'recommend' | 'price' | 'buy'
@@ -38,12 +36,12 @@ function scoreProduct(p: Product, text: string): number {
   return score
 }
 
-/** 商品推荐（未匹配到时的兜底精选） */
-export function hotProducts(): Product[] {
-  return PRODUCTS.slice(0, 3)
+/** 商品推荐（未匹配到时的兜底精选），仅从上架商品中取前 3 */
+export function hotProducts(products: Product[]): Product[] {
+  return products.slice(0, 3)
 }
 
-export function analyze(rawText: string): LocalIntent {
+export function analyze(rawText: string, products: Product[]): LocalIntent {
   const text = normalize(rawText)
   if (text.length === 0) return { kind: 'greeting', matchedProducts: [] }
 
@@ -51,7 +49,8 @@ export function analyze(rawText: string): LocalIntent {
     return { kind: 'greeting', matchedProducts: [] }
   }
 
-  const scored = PRODUCTS.map((p) => ({ p, s: scoreProduct(p, text) }))
+  const scored = products
+    .map((p) => ({ p, s: scoreProduct(p, text) }))
     .filter((x) => x.s > 0)
     .sort((a, b) => b.s - a.s)
   const matched = scored.slice(0, 3).map((x) => x.p)

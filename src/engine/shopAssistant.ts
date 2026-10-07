@@ -1,20 +1,18 @@
 // 导购编排层：统一入口 getShopAnswer。
 // 降级策略（保证路演 100% 成功）：配置了 LLM 密钥 → 优先调用 LLM；
 // LLM 任何异常（超时/限流/网络/解析失败）→ 自动回退本地智能匹配引擎，全程无感。
+// 商品集由调用方传入（仅上架商品），商家上下架后导购结果即时联动。
 
 import type { ChatMessage, ChatResult, Product } from '../types'
-import catalog from '../data/catalog.json'
 import { LLM_ENABLED } from '../config'
 import { runLLM } from './llmClient'
 import { analyze, hotProducts, type LocalIntent } from './localMatcher'
-
-const PRODUCTS = catalog as Product[]
 
 function formatList(products: Product[]): string {
   return products.map((p) => `${p.icon} ${p.name}（${p.priceSol} SOL）`).join('、')
 }
 
-function localReply(intent: LocalIntent, text: string): string {
+function localReply(intent: LocalIntent): string {
   switch (intent.kind) {
     case 'greeting':
       return '你好呀！我是 AI ShopPay 导购助手。直接告诉我你想买什么，比如「来一杯咖啡」「想入创作者会员」，也可以让我「推荐一下」。'
@@ -41,36 +39,36 @@ function localReply(intent: LocalIntent, text: string): string {
   }
 }
 
-export function localAnswer(text: string): ChatResult {
-  const intent = analyze(text)
-  const reply = localReply(intent, text)
-  let products: Product[]
+export function localAnswer(text: string, products: Product[]): ChatResult {
+  const intent = analyze(text, products)
+  const reply = localReply(intent)
+  let result: Product[]
   switch (intent.kind) {
     case 'greeting':
-      products = []
+      result = []
       break
     case 'recommend':
-      products = hotProducts()
+      result = hotProducts(products)
       break
     case 'price':
     case 'buy':
     default:
-      products = intent.matchedProducts.length > 0 ? intent.matchedProducts : hotProducts()
+      result = intent.matchedProducts.length > 0 ? intent.matchedProducts : hotProducts(products)
       break
   }
-  return { reply, products, engine: 'local' }
+  return { reply, products: result, engine: 'local' }
 }
 
-/** 统一导购入口：LLM 优先，异常自动降级本地引擎 */
-export async function getShopAnswer(text: string, history: ChatMessage[]): Promise<ChatResult> {
+/** 统一导购入口：LLM 优先，异常自动降级本地引擎；仅从上架商品中推荐 */
+export async function getShopAnswer(text: string, history: ChatMessage[], products: Product[]): Promise<ChatResult> {
   if (LLM_ENABLED) {
     try {
-      const outcome = await runLLM(text, history, PRODUCTS)
-      const products = PRODUCTS.filter((p) => outcome.productIds.includes(p.id))
-      return { reply: outcome.reply, products, engine: 'llm' }
+      const outcome = await runLLM(text, history, products)
+      const matched = products.filter((p) => outcome.productIds.includes(p.id))
+      return { reply: outcome.reply, products: matched, engine: 'llm' }
     } catch (err) {
       console.warn('[AI ShopPay] LLM 调用失败，已自动降级到本地智能匹配引擎:', err)
     }
   }
-  return localAnswer(text)
+  return localAnswer(text, products)
 }

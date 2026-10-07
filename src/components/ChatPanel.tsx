@@ -1,4 +1,5 @@
 // AI 导购对话面板：聊天式交互 + 商品推荐结果 + 一键支付入口
+// 商品来源由 App 注入（仅上架商品），保证导购推荐与商城状态一致
 import { useEffect, useRef, useState } from 'react'
 import type { ChatMessage, Product } from '../types'
 import { getShopAnswer } from '../engine/shopAssistant'
@@ -27,7 +28,13 @@ function EngineBadge({ engine }: { engine?: 'llm' | 'local' }) {
   )
 }
 
-export default function ChatPanel({ onBuy }: { onBuy: (p: Product) => void }) {
+interface ChatPanelProps {
+  /** 仅上架中的商品，作为 AI 导购的匹配范围 */
+  products: Product[]
+  onBuy: (p: Product) => void
+}
+
+export default function ChatPanel({ products, onBuy }: ChatPanelProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME])
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
@@ -45,7 +52,7 @@ export default function ChatPanel({ onBuy }: { onBuy: (p: Product) => void }) {
     setMessages((m) => [...m, { id: `m${++idRef.current}`, role: 'user', text: t }])
     setBusy(true)
     try {
-      const result = await getShopAnswer(t, messages)
+      const result = await getShopAnswer(t, messages, products)
       setMessages((m) => [
         ...m,
         { id: `m${++idRef.current}`, role: 'assistant', text: result.reply, engine: result.engine, products: result.products },
