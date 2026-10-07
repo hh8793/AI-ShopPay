@@ -29,6 +29,18 @@ export interface Merchant {
   icon: string
 }
 
+/** 商家新增商品时的输入（merchantId/listed/id/priceLamports 由数据层补齐） */
+export interface NewProductInput {
+  name: string
+  category: ProductCategory
+  categoryLabel: string
+  icon: string
+  priceSol: number
+  description: string
+  highlight?: string
+  tags: string[]
+}
+
 export type EngineKind = 'llm' | 'local'
 
 export interface ChatMessage {

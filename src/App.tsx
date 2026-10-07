@@ -6,8 +6,8 @@ import ChatPanel from './components/ChatPanel'
 import CatalogGrid from './components/CatalogGrid'
 import PaySheet from './components/PaySheet'
 import MerchantPanel from './components/MerchantPanel'
-import type { Product, ShopProduct } from './types'
-import { loadProducts, loadListings, applyToggle, persistListings } from './data/catalogStore'
+import type { Product, ShopProduct, NewProductInput } from './types'
+import { loadProducts, loadListings, loadCustomProducts, applyToggle, persistListings, persistCustomProducts } from './data/catalogStore'
 
 export default function App() {
   const [paying, setPaying] = useState<Product | null>(null)
@@ -29,6 +29,20 @@ export default function App() {
     const next = applyToggle(loadListings(), productId)
     persistListings(next)
     setProducts((prev) => prev.map((p) => (p.id === productId ? { ...p, listed: !p.listed } : p)))
+  }
+
+  /** 商家新增商品：自动生成 id 并立即上架，同步持久化到自建商品库 */
+  const addProduct = (merchantId: string, input: NewProductInput) => {
+    const product: ShopProduct = {
+      id: `custom-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`,
+      merchantId,
+      listed: true,
+      ...input,
+      priceLamports: Math.round(input.priceSol * 1_000_000_000),
+    }
+    setProducts((prev) => [...prev, product])
+    const customs = loadCustomProducts()
+    persistCustomProducts([...customs, product])
   }
 
   return (
@@ -69,7 +83,7 @@ export default function App() {
 
       <PaySheet key={paying?.id ?? 'closed'} product={paying} onClose={closePay} />
       {merchantOpen && (
-        <MerchantPanel products={products} onToggle={toggleListing} onClose={() => setMerchantOpen(false)} />
+        <MerchantPanel products={products} onToggle={toggleListing} onAdd={addProduct} onClose={() => setMerchantOpen(false)} />
       )}
     </div>
   )
